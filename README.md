@@ -3,7 +3,7 @@ Contact Management Application for Evolent code test.
 
 # How to execute application
 * Clone project on your local.
-* Move to the "ContactApp" folder and click on "ContactApp - Shortcut" to execute application
+* Navigate to the "ContactApp" folder and click on "ContactApp - Shortcut" to execute application
 
 # Languages & tools
 * #### HTML
