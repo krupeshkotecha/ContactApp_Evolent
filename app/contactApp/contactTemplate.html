@@ -1,0 +1,100 @@
+<div>
+    <button ng-click="addRecordForm(contactForm)" class="btn btn-primary">Add Contact</button>
+    <br>
+    <br>
+    <table border="1" ng-if="contact.contactDetails.length > 0">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Edit</th>
+        </tr>
+        <tr ng-repeat="ct in contact.contactDetails">
+            <td>{{ct.firstName}}</td>
+            <td>{{ct.lastName}}</td>
+            <td>{{ct.phone}}</td>
+            <td>{{ct.email}}</td>
+            <td>{{ct.status}}</td>
+            <td>
+                <button ng-click="editRecord($index)" class="btn btn-warning btn-sm">Edit</button>
+            </td>
+        </tr>
+    </table>
+    <div ng-if="contact.contactDetails.length <= 0">
+        No contact found...! Please add some contact...!
+    </div>
+    <div class="popover" ng-show="popoverFlag" ng-click="popoverOuterDiv($event)">
+        <div class="modal-content">
+            <div class="popoverCloseButton">
+                <img ng-click="popoverFlag = false" class="closeButton" src="assets/close.png" width="50" height="50">
+            </div>
+            <form name="contactForm" novalidate>
+                <table class="contactListTable">
+                    <tr class="form-group">
+                        <td>*First Name</td>
+                        <td>
+                            <input required name="firstName" class="form-control" ng-required="true" type="text" ng-model-options="{ updateOn: 'blur' }" ng-model="currentRecord.firstName">
+                            <div ng-show="contactForm.firstName.$dirty && contactForm.firstName.$invalid && contactForm.firstName.$touched" class="ng-hide errorMessage">
+                                Please enter first Name!
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="form-group">
+                        <td>*Last Name</td>
+                        <td>
+                            <input required class="form-control" ng-required="true" type="text" name="lastName" ng-model-options="{ updateOn: 'blur' }" ng-model="currentRecord.lastName">
+                            <div ng-show="contactForm.lastName.$dirty && contactForm.lastName.$invalid && contactForm.lastName.$touched" class="ng-hide errorMessage">
+                                Please enter last name!
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="form-group">
+                        <td>*Phone</td>
+                        <td>
+                            <input required class="form-control" ng-pattern="/^[0-9][0-9]{9}$/" ng-required="true" type="phone" ng-model-options="{ updateOn: 'blur' }" name="phone" ng-model="currentRecord.phone">
+                            <div ng-show="contactForm.phone.$dirty && contactForm.phone.$invalid && contactForm.phone.$touched" class="ng-hide errorMessage">
+                                Please enter valid phone number!
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="form-group">
+                        <td>*Email</td>
+                        <td>
+                            <input class="form-control" name="email" required ng-pattern="/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/" ng-required="true" type="email" ng-model-options="{ updateOn: 'blur' }" ng-model="currentRecord.email">
+                            <div ng-show="contactForm.email.$dirty && contactForm.email.$invalid && contactForm.email.$touched" class="ng-hide errorMessage">
+                                Please enter valid email ID!
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="form-group">
+                        <td>*Status</td>
+                        <td>
+                            <select class="form-control" name="status" required ng-required="true" ng-model="currentRecord.status" ng-model-options="{ updateOn: 'change' }">
+                                <option value="Active">Active</option>
+                                <option value="InActive">InActive</option>
+                            </select>
+                            <div ng-show="contactForm.status.$dirty && contactForm.status.$invalid && contactForm.status.$touched" class="ng-hide errorMessage">
+                                Please select status!
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="editRecordFlag">
+                        <td>
+                            <button type="submit" ng-click="updateRecord(contactForm)" class="btn btn-primary ">Update</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" ng-click="deleteRecord()">Delete</button>
+                        </td>
+                    </tr>
+                    <tr ng-if="!editRecordFlag">
+                        <td>
+                            <button type="submit" class="btn btn-primary" ng-click="addRecord(contactForm)">Add</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
